@@ -113,17 +113,17 @@ function phoneCheckAndChange() {
 }
 
 // Set up password check
-function passwordCheck(){
-    var password = prompt("This site requires a password to view.\nPlease enter the password:");
-    if (password==="LandBack1721"){
-        window.location="https://geomedialab.github.io/Kanehsatake-Land-Defense/index.html";
-        localStorage.setItem("passwordVerified", true)
-    } else{
-        passwordCheck();
-    }
-}
+// function passwordCheck(){
+//     var password = prompt("This site requires a password to view.\nPlease enter the password:");
+//     if (password==="LandBack1721"){
+//         window.location="https://geomedialab.github.io/Kanehsatake-Land-Defense/index.html";
+//         localStorage.setItem("passwordVerified", true)
+//     } else{
+//         passwordCheck();
+//     }
+// }
 
-if(localStorage.getItem("passwordVerified") === false || localStorage.getItem("passwordVerified") === null) {
-    console.log("Password not entered")
-    window.onload=passwordCheck;
-}
+// if(localStorage.getItem("passwordVerified") === false || localStorage.getItem("passwordVerified") === null) {
+//     console.log("Password not entered")
+//     window.onload=passwordCheck;
+// }
