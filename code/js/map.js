@@ -116,7 +116,7 @@ const Esri_WorldImagery1 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/r
 }).addTo(timelineMap);
 
 
-var darkBasemap1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+var darkBasemap1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_4ect_1_e2fe39e91999d73ffc1d23a2', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 20,
