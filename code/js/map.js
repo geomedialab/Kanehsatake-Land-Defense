@@ -407,12 +407,12 @@ function timeDisplay(data, previousYear, liveYear, index) {
 
     var timelineStyle = {
 
-        "fillColor": timelineGradient[index],
-        "fillOpacity": 0,
+        "fillColor": "#FFFFFF",
+        "fillOpacity": 0.25,
 
-        "color": "#000",
-        "weight": 1,
-        "opacity": 0,
+        "color": "#FFFFFF",
+        "weight": 0.25,
+        "opacity": 0.25,
 
         "interactive": false,
     }
@@ -423,7 +423,7 @@ function timeDisplay(data, previousYear, liveYear, index) {
         timelineStyle
     ).addTo(timelineMap);
     // Fade that layer onto map over time
-    fadeInLayerLeaflet(timelineLayer, timelineStyle.opacity, 0.8, 0.01, interval / 100)
+    fadeInLayerLeaflet(timelineLayer, timelineStyle.opacity, 0.8, 0.01, interval / 100, false)
     // Recursive call 
     if (liveYear <= 1960) {
         timeouts.push(setTimeout(() => { timeDisplay(data, liveYear, (liveYear + range), (index + 1)); }, interval + 500));
@@ -438,14 +438,15 @@ function timeDisplay(data, previousYear, liveYear, index) {
 
 
 // Shout out this guy: https://codepen.io/maptastik/pen/MZprRJ
-function fadeInLayerLeaflet(lyr, startOpacity, finalOpacity, opacityStep, delay) {
+function fadeInLayerLeaflet(lyr, startOpacity, finalOpacity, opacityStep, delay, fadeFill = true) {
     let opacity = startOpacity;
     setTimeout(function changeOpacity() {
         if (opacity < finalOpacity) {
-            lyr.setStyle({
-                fillOpacity: opacity,
-                opacity: opacity
-            });
+            const style = { opacity: opacity };
+            if (fadeFill) {
+                style.fillOpacity = opacity;
+            }
+            lyr.setStyle(style);
             opacity = opacity + opacityStep
         }
 
