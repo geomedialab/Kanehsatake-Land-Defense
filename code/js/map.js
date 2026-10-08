@@ -133,18 +133,35 @@ var darkBasemap1 = L.tileLayer(
 // This is a convoluted function that adds IndigLandsLayer to the basemaps but is also in charge of creating the basemap control features
 // It's not great coding but it works
 function addIndigLands() {
-    fetch("https://native-land.ca/wp-json/nativeland/v1/api/index.php?maps=territories&name=mohawk")
-        .then((response) => response.json())
-        .then((r) => indigLandsData = r)
-        .then(() => {
+    fetch(dataBaseUrl + '/data/geojson/Indig_lands_clipped.geojson')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Indigenous lands data request failed: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (!data || data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+                throw new Error('Indigenous lands data is not a valid GeoJSON FeatureCollection');
+            }
+
+            indigLandsData = {
+                ...data,
+                features: data.features.filter((feature) => feature.properties?.Slug === 'mohawk')
+            };
+
+            if (indigLandsData.features.length === 0) {
+                throw new Error('No Mohawk feature found in Indigenous lands data');
+            }
+
             var indigLandsLayer = L.geoJSON(
                 indigLandsData,
-                setOptions = {
+                {
                     onEachFeature: onEachFeatureIndigLands,
                     attribution: "Native Land Digital"
                 }
             );
-            // The order within these determines which is initalized on top.
+            // The order within these determines which is initialized on top.
             // The lower one gets rendered as on top of the other ones so is the first layer the user will see.
             const overlays1 = {
                 "<p class='english'>Mohawk Indigenous Lands<br>Source: <a style='display: contents' href='https://native-land.ca/' target='_blank'>Native-Land.ca</a></p>\
@@ -156,7 +173,9 @@ function addIndigLands() {
             }
 
             L.control.layers(basemaps1, overlays1, { position: 'topleft' }).addTo(timelineMap);
-
+        })
+        .catch((error) => {
+            console.warn('Mohawk Indigenous lands layer unavailable:', error);
         });
 }
 

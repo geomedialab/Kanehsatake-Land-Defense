@@ -38,7 +38,6 @@ function changeToFrench() {
     }
 
     localStorage.setItem("Language", "french")
-    console.log("Language set to french")
 }
 
 function changeToEnglish() {
@@ -71,7 +70,6 @@ function changeToEnglish() {
 
     // Set local storage data
     localStorage.setItem("Language", "english")
-    console.log("Language set to english")
 }
 
 function checkLanguage() {
@@ -85,7 +83,7 @@ function pageLoadLanguageCheck() {
     var language = checkLanguage();
 
     if (language == "french") {
-        languageSwitch.click()
+        languageSwitch.checked = true;
         changeToFrench();
     }
 }
@@ -94,13 +92,12 @@ window.addEventListener("resize", function (event) {
     phoneCheckAndChange();
 }
 )
-window.onload = function () {
+window.addEventListener("load", function () {
     phoneCheckAndChange();
     pageLoadLanguageCheck();
-}
+});
 
 function phoneCheckAndChange() {
-    console.log("Checking screen size")
     var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
     if (vw <= 850) {
@@ -116,7 +113,6 @@ function phoneCheckAndChange() {
 function passwordCheck(){
     var password = prompt("This site requires a password to view.\nPlease enter the password:");
     if (password==="LandBack1721"){
-        window.location="https://geomedialab.github.io/Kanehsatake-Land-Defense/index.html";
         localStorage.setItem("passwordVerified", true)
     } else{
         passwordCheck();
@@ -124,6 +120,5 @@ function passwordCheck(){
 }
 
 if(localStorage.getItem("passwordVerified") === false || localStorage.getItem("passwordVerified") === null) {
-    console.log("Password not entered")
-    window.onload=passwordCheck;
+    window.addEventListener("load", passwordCheck);
 }
